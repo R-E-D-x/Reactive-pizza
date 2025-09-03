@@ -10,6 +10,7 @@ function Home() {
         </span>
       </h1>
       <CreateUser />
+      <p className="fixed bottom-0 text-xl">©copyrights RED - 2025</p>
     </div>
   );
 }
