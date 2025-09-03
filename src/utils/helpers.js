@@ -1,9 +1,9 @@
 import html2canvas from "html2canvas";
 
 export function formatCurrency(value) {
-  return new Intl.NumberFormat("ar", {
+  return new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "EGP",
+    currency: "USD",
   }).format(value);
 }
 
