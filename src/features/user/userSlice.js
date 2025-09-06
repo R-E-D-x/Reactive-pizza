@@ -27,6 +27,7 @@ const initialState = {
   status: 'idle',
   position: '',
   address: '',
+  error: null
 };
 
 const reducers = {

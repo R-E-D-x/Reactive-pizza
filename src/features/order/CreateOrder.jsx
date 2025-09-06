@@ -4,18 +4,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddress } from '../user/userSlice';
 import GeoAltIcon from '../../Icons/GeoAltIcon';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../../Icons/Spinner';
 function CreateOrder() {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { cart } = useSelector((state) => state.cart);
   const [withPriority, setWithPriority] = useState(false);
-  const { username, address, status } = useSelector((state) => state.user);
+  const { username, address, status, error } = useSelector(
+    (state) => state.user,
+  );
   const [phone, setPhone] = useState('');
+
+  // Checking if there is no cart in the order
   useEffect(() => {
+    // redirecting to the home page if no name otherwise to the menu
+    if (!username && cart.length === 0) navigate('/');
     if (cart.length === 0 && navigation.state === 'idle') navigate('/menu');
-  }, []);
+
+    // we want only to check it on component mount
+  }, []); // eslint-disable-line
+
   const isLoading = navigation.state !== 'idle';
   const formErrors = useActionData();
   return (
@@ -80,6 +89,11 @@ function CreateOrder() {
                 </div>
               </button>
             </div>
+            {status === 'error' && (
+              <span className="col-span-2 text-right text-sm font-semibold text-red-800">
+                {error}*
+              </span>
+            )}
           </div>
 
           <div className="flex justify-center gap-3.5">

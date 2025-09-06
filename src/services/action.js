@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import { createOrder } from './apiRestaurant';
+import { createOrder } from './custom-api';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -21,6 +21,6 @@ export async function action({ request }) {
   }
   if (Object.keys(errors).length > 0) return errors;
   const newOrder = await createOrder(order);
-
-  return redirect(`/order/${newOrder.id}`);
+  console.log('submitted :', newOrder)
+  // return redirect(`/order/${newOrder.id}`);
 }

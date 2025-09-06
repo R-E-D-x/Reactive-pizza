@@ -3,7 +3,14 @@ import { formatCurrency } from '../../utils/helpers';
 import { addToCart } from '../cart/cartSlice';
 
 function MenuItem({ pizza }) {
-  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const {
+    id,
+    name,
+    unitprice: unitPrice,
+    ingredients,
+    soldout: soldOut,
+    imageurl: imageUrl,
+  } = pizza;
   const dispatch = useDispatch();
   const bakedData = {
     imageUrl,
@@ -14,7 +21,6 @@ function MenuItem({ pizza }) {
     totalPrice: unitPrice,
   };
   const { cart } = useSelector((state) => state.cart);
-  console.log(cart);
   const itemInCart = cart.some((item) => item.pizzaId === id);
   return (
     <li className="mx-auto mb-4 flex justify-between rounded-xl px-4 py-1.5 max-sm:items-center max-sm:gap-4 sm:flex-col">

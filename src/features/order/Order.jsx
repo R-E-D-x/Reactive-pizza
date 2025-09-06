@@ -21,10 +21,11 @@ function Order() {
     id,
     status,
     priority,
-    priorityPrice,
-    orderPrice,
-    estimatedDelivery,
     cart,
+    // does not exist yet
+    estimateddelivery: estimatedDelivery,
+    priority_price: priorityPrice,
+    order_price: orderPrice,
   } = order;
   // console.log(cart);
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
