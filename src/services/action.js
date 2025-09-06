@@ -19,8 +19,12 @@ export async function action({ request }) {
   if (!isValidPhone(order.phone)) {
     errors.phone = 'please Provide a correct phone number';
   }
-  if (Object.keys(errors).length > 0) return errors;
-  const newOrder = await createOrder(order);
+  if (Object.keys(errors).length > 0) {
+    console.log(errors)
+    return errors;
+  }
+  console.log(order)
+  const [newOrder] = await createOrder(order);
   console.log('submitted :', newOrder)
-  // return redirect(`/order/${newOrder.id}`);
+  return redirect(`/order/${newOrder.id}`);
 }

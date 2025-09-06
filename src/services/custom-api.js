@@ -14,18 +14,21 @@ export async function getMenu() {
 }
 
 export async function createOrder(newOrder) {
-    const { cart, priority } = newOrder
-    const order_price = cart.reduce((init, curr) => init + curr.unitPrice * curr.quantity, 0)
-    const time = priority ? 45 : 60
+    const order_price = newOrder.cart.reduce((init, curr) => init + curr.unitPrice * curr.quantity, 0)
+    const time = newOrder.priority ? 45 : 60
     const now = new Date()
+    console.log(newOrder.priority)
+    const order = {
+        ...newOrder,
+        order_price,
+        estimateddelivery: new Date(now.getTime() + time * 60 * 1000),
+        priority_price: 10,
+        priority: newOrder.priority ? true : false
+    }
+    console.log(order)
     const { data, error } = await supabase
         .from('orders')
-        .insert({
-            ...newOrder,
-            order_price,
-            estimateddelivery: new Date(now.getTime() + time * 60 * 1000),
-            priority_price: 10
-        })
+        .insert(order)
         .select()
     if (error) console.log(error)
     console.log(data)
@@ -41,6 +44,10 @@ export async function getOrder(id) {
     console.log(new Date(order.estimateddelivery))
     return {
         ...order,
-        status: new Date(order.estimateddelivery) > new Date() ? 'delivered' : 'not delivered'
+        status: new Date(order.estimateddelivery) < new Date() ? 'Delivered' : 'Preparing'
     }
 }
+
+// in the future:
+// export async function updateOrder(id) {
+// }
