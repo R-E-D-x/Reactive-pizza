@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddress } from '../user/userSlice';
 import GeoAltIcon from '../../Icons/GeoAltIcon';
 import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
+
 function CreateOrder() {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { cart } = useSelector((state) => state.cart);
@@ -14,6 +15,10 @@ function CreateOrder() {
   const { username, address, status, error } = useSelector(
     (state) => state.user,
   );
+  const [localAdress, setlocalAddress] = useLocalStorage('address', '');
+  useEffect(() => {
+    if (address) setlocalAddress(address);
+  }, [address, setlocalAddress]);
   const [phone, setPhone] = useState('');
 
   // Checking if there is no cart in the order
@@ -68,7 +73,7 @@ function CreateOrder() {
             <div className="flex">
               <input
                 className="w-full flex-1 rounded-l-sm border-1 border-r-0 px-2 py-0.5"
-                defaultValue={address}
+                defaultValue={address || localAdress}
                 type="text"
                 name="address"
                 required

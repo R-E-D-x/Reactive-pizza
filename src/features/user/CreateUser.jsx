@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateName } from './userSlice';
 import { useNavigate, useNavigation } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 function CreateUser() {
-  const [username, setUsername] = useState('');
+  const [localName, setLocalName] = useLocalStorage('name', '');
+  const [username, setUsername] = useState(localName);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -12,6 +14,7 @@ function CreateUser() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(updateName(username));
+    setLocalName(username);
     navigate('/menu');
   }
   if (navigation.state !== 'idle')
